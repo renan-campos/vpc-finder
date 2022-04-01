@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpc-finder
+spec:
+  containers:
+  - name: vpc-finder
+    image: quay.io/rcampos/vpc-finder:latest
+    command: ["vpcFinder"]
+    args: []
+  serviceAccount: vpc-finder
+  restartPolicy: OnFailure
+  hostNetwork: true

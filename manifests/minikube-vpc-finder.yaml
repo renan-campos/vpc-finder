@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpc-finder
+spec:
+  containers:
+  - name: vpc-finder
+    image: quay.io/rcampos/vpc-finder:latest
+    command: ["vpcFinder"]
+    args: ["TODO"]
+  serviceAccount: vpc-finder
+  restartPolicy: OnFailure
+  hostNetwork: true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: imdsv1-mock
+  labels:
+    app: imdsv1-mock
+spec:
+  containers:
+  - name: imdsv1-mock
+    image: quay.io/rcampos/vpc-finder:latest
+    command: ["imdsv1Mocker"]
+  restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imdsv1-mock
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: imdsv1-mock
+  type: ClusterIP
