@@ -6,9 +6,15 @@ metadata:
 spec:
   containers:
   - name: vpc-finder
-    image: quay.io/rcampos/vpc-finder:latest
     command: ["vpcFinder"]
-    args: ["TODO"]
+    args: ["http://imdsv1-mock:8080"]
+    env:
+     - name: NAMESPACE
+       valueFrom:
+         fieldRef:
+           apiVersion: v1
+           fieldPath: metadata.namespace
+    image: localhost:5000/vpc-finder:latest
   serviceAccount: vpc-finder
   restartPolicy: OnFailure
   hostNetwork: true
@@ -22,8 +28,8 @@ metadata:
 spec:
   containers:
   - name: imdsv1-mock
-    image: quay.io/rcampos/vpc-finder:latest
     command: ["imdsv1Mocker"]
+    image: localhost:5000/vpc-finder:latest
   restartPolicy: OnFailure
 ---
 apiVersion: v1
@@ -33,8 +39,8 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080
   selector:
     app: imdsv1-mock
   type: ClusterIP
