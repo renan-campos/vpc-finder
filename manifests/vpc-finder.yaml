@@ -9,6 +9,12 @@ spec:
     image: quay.io/rcampos/vpc-finder:latest
     command: ["vpcFinder"]
     args: []
+    env:
+     - name: NAMESPACE
+       valueFrom:
+         fieldRef:
+           apiVersion: v1
+           fieldPath: metadata.namespace
   serviceAccount: vpc-finder
   restartPolicy: OnFailure
   hostNetwork: true

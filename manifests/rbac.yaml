@@ -10,11 +10,9 @@ metadata:
   name: vpc-finder
 rules:
   - apiGroups:
-    - core
+    - ""
     resources:
-      - configmap
-    resourceNames:
-      - aws-data
+      - configmaps
     verbs:
       - create
       - update
