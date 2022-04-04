@@ -1,6 +1,6 @@
 # VPC Finder
 In an Openshift cluster, network policies are set to restrict where pods can send traffic.
-If pods needs to reach the nodes through their node ips, a static network policy allowing traffic to be sent within the node network would suffice.
+If pods need to reach the nodes through their node ips, a static network policy allowing traffic to be sent within the node network would suffice.
 When the cluster is deployed in AWS, the node network is the VPC CIDR.
 The entity within the cluster creating the network policy must have a way to determine the VPC CIDR.
 
@@ -12,10 +12,10 @@ We need a way to determine the VPC CIDR from within an Openshift cluster without
 - Writes the VPC CIDR to a aws-data ConfigMap so that other pods in the namespace can utilize that data.
 
 ### vpc_finder DOES NOT:
-- Use AWS accounts to query the underlying infrastructure/
+- Use AWS accounts to query the underlying infrastructure.
 
 ### Here is how it works:
-- A pod, the vpc_finder is deployed in the host network namespace.
+- A pod, the vpc_finder, is deployed in the host network namespace.
 - The vpc_finder uses the AWS Instance Metadata and User data endpoint (IMDSv1[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html]) to query for the VPC CIDR
 - The pod writes the VPC CIDR into a aws-data configmap
 
