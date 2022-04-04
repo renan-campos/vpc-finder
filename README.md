@@ -17,7 +17,7 @@ We need a way to determine the VPC CIDR from within an Openshift cluster without
 ### Here is how it works:
 - A pod, the vpc_finder, is deployed in the host network namespace.
 - The vpc_finder uses the AWS Instance Metadata and User data endpoint (IMDSv1[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html]) to query for the VPC CIDR
-- The pod writes the VPC CIDR into a aws-data configmap
+- The pod writes the VPC CIDR into a configmap
 
 ### To deploy:
 This approach has been tested on an Openshift cluster running in AWS:
